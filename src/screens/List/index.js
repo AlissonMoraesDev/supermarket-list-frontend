@@ -1,14 +1,16 @@
 import './index.css';
 import { useEffect, useState } from "react"
 import { getList } from "../../services/request"
-import { Button, ListRender, Loader } from "../../components";
+import { Button, ListRender, Loader, Modal } from "../../components";
 
 
 export const ListScreen = () => {
-  const [loading, setLoading] = useState(true);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [listData, setListData] = useState([]);
 
   const loadListItems = async () => {
+    setLoading(true);
     const result = await getList();
     setListData(result);
     setLoading(false);
@@ -17,6 +19,14 @@ export const ListScreen = () => {
   useEffect(() => {
     loadListItems();
   }, [])
+
+  const onClickAddButton = () => {
+    setModalVisible(true);
+  }
+
+  const onCloseModal = () => {
+    setModalVisible(false);
+  }
   
   return (
     <div className="list-screen-container">
@@ -27,7 +37,7 @@ export const ListScreen = () => {
             <h1 className='list-screen-header-title'>Lista Supermercado</h1>
           </div>
           <div className='list-screen-header-button-container'>
-            <Button>Adicionar</Button>
+            <Button onClick={onClickAddButton}>Adicionar</Button>
           </div>
         </div>
         <div className='list-items'>
@@ -36,6 +46,7 @@ export const ListScreen = () => {
           }
         </div>
       </div>
+      {modalVisible && <Modal onClose={onCloseModal} />}
     </div>
   )
 }
