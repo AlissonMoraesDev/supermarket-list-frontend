@@ -43,6 +43,12 @@
   background-repeat: no-repeat;
   cursor: pointer;
 }
-.modal-space {
-  height: 67vh;
+
+.buttons-container {
+  display: flex;
+  flex-direction: column;
+  height: 10vh;
+  width: 100%;
+  justify-content: space-between;
+  margin-top: 62vh;
 }
